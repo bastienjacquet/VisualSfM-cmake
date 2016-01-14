@@ -1,0 +1,36 @@
+--- SiftGPU/makefile
++++ SiftGPU/makefile
+@@ -13,8 +13,9 @@
+ else
+ 	siftgpu_enable_cuda = 0
+ endif
+-
+-CUDA_INSTALL_PATH = /usr/local/cuda
++siftgpu_enable_cuda = 1
++
++CUDA_INSTALL_PATH = /opt/NVPACK/cuda-6.0-7ea902a/
+ #change  additional  settings, like SM version here if it is not 1.0 (eg. -arch sm_13 for GTX280)
+ #siftgpu_cuda_options = -Xopencc -OPT:unroll_size=200000
+ #siftgpu_cuda_options = -arch sm_10
+@@ -24,9 +25,9 @@
+ siftgpu_sse_options = -march=native -mfpmath=sse
+ #--------------------------------------------------------------------------------------------------
+ # openGL context creation.  1 for glut, 0 for xlib
+-siftgpu_prefer_glut = 0
++siftgpu_prefer_glut = 1
+ #whether remove dependency on DevIL (1 to remove, the output libsiftgpu.so still works for VisualSFM)
+-siftgpu_disable_devil = 0
++siftgpu_disable_devil = 1
+ #------------------------------------------------------------------------------------------------
+ #whether SimpleSIFT uses runtime loading of libsiftgpu.so or static linking of libsiftgpu.a
+ simplesift_runtime_load = 1
+@@ -118,7 +119,8 @@
+ 		CUDA_LIB_PATH = $(CUDA_INSTALL_PATH)/lib64 -L$(CUDA_INSTALL_PATH)/lib
+ 	endif
+ 
+-	CFLAGS += -DCUDA_SIFTGPU_ENABLED -I$(CUDA_INC_PATH) -L$(CUDA_LIB_PATH)
++	LDFLAGS="-Wl,-rpath,$(CUDA_INSTALL_PATH)/lib64"
++	CFLAGS += -DCUDA_SIFTGPU_ENABLED -I$(CUDA_INC_PATH) -L$(CUDA_LIB_PATH) $(LDFLAGS)
+ 	LIBS_SIFTGPU += -lcudart
+ 	_OBJ_SIFTGPU += CuTexImage.o PyramidCU.o SiftMatchCU.o
+ 	_HEADER_SIFTGPU += CuTexImage.h ProgramCU.h PyramidCU.h
