@@ -1,0 +1,11 @@
+--- src/pba/SparseBundleCPU.h	2012-07-16 23:51:08.000000000 +0200
++++ src/pba/SparseBundleCPU-tmp.h	2016-01-12 18:33:23.186107340 +0100
+@@ -21,7 +21,7 @@
+ #if !defined(SPARSE_BUNDLE_CPU_H)
+ #define SPARSE_BUNDLE_CPU_H
+ 
+-#include <malloc.h>
++#include <stdlib.h>
+ 
+ //BYTE-ALIGNMENT for data allocation (16 required for SSE, 32 required for AVX)
+ //PREVIOUS version uses only SSE. The new version will include AVX. 
